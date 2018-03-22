@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use illuminate\Http\Request;
 use App\User;
-
+use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
@@ -39,8 +39,8 @@ class UserController extends Controller
     {
         $user = User::whereEmail($request->email)->first();
 
-        if(! is_null($user) && Hash::check($request->password, $user->password)){
-            return response(['token'=>$user->createdToken('token')->accessToken], 200);
+        if(! is_null($user) && Hash::check($request->password, $user->password)) {
+            return response(['token'=>$user->createToken('token')->accessToken], 200);
         }
         //-> memeber sector
         //=> fat arrow:for associative arrays

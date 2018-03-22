@@ -15,6 +15,7 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+//user endpoints
 $router->post('/auth/register', [
     'uses' => 'UserController@register',
     'as' => 'register'
@@ -25,24 +26,54 @@ $router->post('/auth/login',[
     'as'=> 'login'
 ]);
 
-$router->get('/category',[
-    'uses' => 'CategoryController@category',
+$router->get('/category/all',[
+    'uses' => 'CategoryController@all',
     'as' => 'categories'
 ]);
 
 $router->get('/category/{id}',[
-    'uses' => 'CategoryController@category',
-    'as' => 'category'
+    'uses' => 'CategoryController@get_category',
+    'as' => 'get_category'
 ]);
-$router->post('/category',[
-    'uses' => 'CategoryController@category',
+
+//category endpoints
+$router->post('/category/add',[
+    'uses' => 'CategoryController@add',
     'as' => 'add_category'
 ]);
-$router->delete('/category/{id}',[
-    'uses' => 'CategoryController@category',
+
+$router->delete('/category/delete/{id}',[
+    'uses' => 'CategoryController@delete_category',
     'as' => 'delete_category'
 ]);
-$router->put('/category/{id}',[
-    'uses' =>'CategoryController@category',
+
+$router->put('/category/edit/{id}',[
+    'uses' =>'CategoryController@update_category',
     'as' => 'update_category'
+]);
+
+//recipe endpoints
+$router->post('/category/{id}/recipe',[
+    'uses' => 'RecipeController@create_recipe',
+    'as' => 'create_recipe'
+]);
+
+$router->get('/category/{id}/recipe',[
+    'uses' => 'RecipeController@all_recipes',
+    'as' => 'all_recipes'
+]);
+
+$router->get('/category/{id}/recipe/{recipe_id}',[
+    'uses' => 'RecipeController@get_recipe',
+    'as' => 'get_recipe'
+]);
+
+$router->delete('/category/id/recipe/{recipe_id}',[
+    'uses' => 'RecipeController@delete_recipe',
+    'as' => 'delete_recipe'
+]);
+
+$router->put('/category/id/recipe/{recipe_id}',[
+    'uses' => 'RecipeController@update_recipe',
+    'as' => 'delete_recipe'
 ]);
