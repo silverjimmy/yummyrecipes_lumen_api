@@ -24,17 +24,18 @@ class RecipeController extends Controller
         $recipe = Category::find($id);
         if ($recipe)
         {
+
             $this->validate(
                 $request,[
                 'name' => 'required|string',
                 'description' => 'required',
             ]);
+//            $check = Recipe::find($request);
             $recipes = Recipe::create([
                 'name'=> $request->name,
                 'description'=> $request->description,
                 'category_id' => $id,
             ]);
-
             $message = 'Recipe created';
         }
         return response (['message'=>$message], 201);
@@ -46,14 +47,14 @@ class RecipeController extends Controller
         $recipe = Category::find($id);
         if ($recipe)
         {
-            $recipes = Recipe::all();
+            $recipes = Recipe::where('created_by', $id)->get();
         }
         return response ($recipes, 200);
     }
 
     public function get_recipe(Request $request, $id, $recipe_id)
     {
-        $message = 'Category doesnt contain that recipe';
+        $message = 'Category doesnt contain the recipe.';
         $recipe = Category::find($id);
         if ($recipe)
         {
@@ -62,16 +63,24 @@ class RecipeController extends Controller
         return response($recipe, 200);
 
     }
-    public function delete_recipe(Request $request, $id, $recipe_id)
+    public function delete_recipe($id, $recipe_id)
     {
+        $message = 'Category doesnt contain the recipe.';
         $recipe = Category::find($id);
         if ($recipe)
         {
             $recipes = Recipe::find($recipe_id);
             $recipes->delete();
+            $message ='Recipe has been deleted';
         }
-        return response('Recipe Deleted');
+        return response(['message'=>$message], 200);
     }
+
+    public function update_recipe(Request $request, $id, $recipe)
+    {
+        $message = 'Recipe doesnt exits';
+    }
+
 
     //use try...catch() to check for error condition.
 }

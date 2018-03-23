@@ -25,13 +25,20 @@ class CategoryController extends Controller
                 'name' => 'required|string|min: 5|max: 20',
                 'description' =>'required'
             ]);
-            $category =Category::create([
-                'name' => $request -> name,
-                'description' => $request -> description,
-                'created_by' => $request ->user()->id
-            ]);
 
-        return response($category, 201);
+        if (Category::where('name', $request->name)->first())
+        {
+            return response(['error'=>'Name already exits'], 400);
+        } else {
+            $category = Category::create([
+                'name'=>$request->name,
+                'description'=>$request->description,
+                'created_by'=>$request->user()->id
+            ]);
+            return response($category, 201);
+        }
+
+
             
 
     }

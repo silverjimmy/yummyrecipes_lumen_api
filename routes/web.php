@@ -68,12 +68,12 @@ $router->get('/category/{id}/recipe/{recipe_id}',[
     'as' => 'get_recipe'
 ]);
 
-$router->delete('/category/id/recipe/{recipe_id}',[
+$router->delete('/category/{id}/recipe/{recipe_id}',[
     'uses' => 'RecipeController@delete_recipe',
     'as' => 'delete_recipe'
 ]);
 
-$router->put('/category/id/recipe/{recipe_id}',[
+$router->put('/category/{id}/recipe/{recipe_id}',[
     'uses' => 'RecipeController@update_recipe',
-    'as' => 'delete_recipe'
+    'as' => 'udpate_recipe'
 ]);
